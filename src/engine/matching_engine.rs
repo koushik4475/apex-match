@@ -6,8 +6,8 @@ use crate::engine::ring_buffer::{make_spsc_ring, Consumer, Producer};
 use crate::orderbook::tree::{OrderBook, OrderBookError};
 use crate::risk::validator::RiskValidator;
 use crate::types::{
-    ExecutionReport, ExecutionStatus, L2Snapshot, L3Snapshot, MatchResult, Order, OrderId, Price,
-    Qty, RejectOrCancelReason, SymbolId, BBO,
+    ExecutionReport, ExecutionStatus, L2Snapshot, L3Snapshot, MatchResult, Order, OrderId,
+    RejectOrCancelReason, SymbolId, BBO,
 };
 use std::collections::HashMap;
 use std::sync::Arc;

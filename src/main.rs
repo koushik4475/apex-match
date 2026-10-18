@@ -23,7 +23,7 @@ fn main() {
     let mut engine = MatchingEngine::new(262_144);
     let symbol_id = 1; // E.g., BTC/USD or AAPL
     engine.register_symbol(symbol_id);
-    engine.risk_validator.set_reference_price(symbol_id, 100_00); // Reference price $100.00
+    engine.risk_validator.set_reference_price(symbol_id, 10_000); // Reference price $100.00
 
     let num_orders = 100_000usize;
     println!(
@@ -39,9 +39,9 @@ fn main() {
     for i in 1..=50_000 {
         let side = if i % 2 == 0 { Side::Buy } else { Side::Sell };
         let price = if side == Side::Buy {
-            95_00 + ((i as u64) % 500) // 95.00 to 99.99
+            9500 + ((i as u64) % 500) // 95.00 to 99.99
         } else {
-            100_01 + ((i as u64) % 500) // 100.01 to 105.00
+            10_001 + ((i as u64) % 500) // 100.01 to 105.00
         };
 
         let order = Order::new(
@@ -67,7 +67,7 @@ fn main() {
     for i in 50_001..=100_000 {
         let side = if i % 2 == 0 { Side::Buy } else { Side::Sell };
         // Aggressive crossing prices: Buy @ 103.00, Sell @ 97.00
-        let price = if side == Side::Buy { 103_00 } else { 97_00 };
+        let price = if side == Side::Buy { 10_300 } else { 9700 };
 
         let order = Order::new(
             i as u64,

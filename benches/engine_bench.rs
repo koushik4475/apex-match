@@ -15,7 +15,7 @@ fn bench_order_insertion(c: &mut Criterion) {
                 OrderType::Limit,
                 TimeInForce::GTC,
                 STPMode::None,
-                100_00,
+                10_000,
                 10,
                 1000,
             );
@@ -38,7 +38,7 @@ fn bench_order_crossing_match(c: &mut Criterion) {
                 OrderType::Limit,
                 TimeInForce::GTC,
                 STPMode::None,
-                100_00,
+                10_000,
                 10,
                 1000,
             );
@@ -54,7 +54,7 @@ fn bench_order_crossing_match(c: &mut Criterion) {
                 OrderType::Limit,
                 TimeInForce::IOC,
                 STPMode::None,
-                100_00,
+                10_000,
                 10,
                 1000,
             );
@@ -77,7 +77,7 @@ fn bench_order_cancellation(c: &mut Criterion) {
                 OrderType::Limit,
                 TimeInForce::GTC,
                 STPMode::None,
-                100_00,
+                10_000,
                 10,
                 1000,
             );

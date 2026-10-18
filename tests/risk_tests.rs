@@ -20,7 +20,7 @@ fn test_pre_trade_margin_rejection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        500_00,
+        50_000,
         100,
         1000,
     );
@@ -37,7 +37,7 @@ fn test_pre_trade_margin_rejection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        50_00,
+        5000,
         100,
         2000,
     );
@@ -48,7 +48,7 @@ fn test_pre_trade_margin_rejection() {
 fn test_price_collar_fat_finger_protection() {
     let mut validator = RiskValidator::new(0.05, 100_000.0); // 5% price collar
     let symbol_id = 1;
-    validator.set_reference_price(symbol_id, 100_00); // Ref price = $100.00
+    validator.set_reference_price(symbol_id, 10_000); // Ref price = $100.00
                                                       // Max allowable Buy = $105.00, Min allowable Sell = $95.00
 
     // Buy @ $106.00 should be rejected by collar
@@ -60,7 +60,7 @@ fn test_price_collar_fat_finger_protection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        106_00,
+        10_600,
         10,
         1000,
     );
@@ -78,7 +78,7 @@ fn test_price_collar_fat_finger_protection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        94_00,
+        9400,
         10,
         2000,
     );
@@ -96,7 +96,7 @@ fn test_price_collar_fat_finger_protection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        104_00,
+        10_400,
         10,
         3000,
     );
@@ -120,7 +120,7 @@ fn test_credit_limits_rejection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        10_00,
+        1000,
         100,
         1000,
     );
@@ -138,7 +138,7 @@ fn test_credit_limits_rejection() {
         OrderType::Limit,
         TimeInForce::GTC,
         STPMode::None,
-        10_00,
+        1000,
         20,
         2000,
     );

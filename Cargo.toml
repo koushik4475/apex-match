@@ -12,7 +12,7 @@ categories = ["concurrency", "algorithms", "finance"]
 
 [lib]
 name = "apex_match"
-crate-type = ["lib", "cdylib", "staticlib"]
+crate-type = ["rlib", "cdylib"]
 
 [[bin]]
 name = "apex-match"
