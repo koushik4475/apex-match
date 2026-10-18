@@ -1,0 +1,43 @@
+[package]
+name = "apex-match"
+version = "0.1.0"
+edition = "2021"
+authors = ["koushik4475 <koushik4475@gmail.com>"]
+description = "Ultra-Low-Latency HFT Matching Engine with L2/L3 Orderbook, Lock-Free Ring Buffer, and Pre-Trade Risk Checks"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/ER-brocode/apex-match"
+readme = "README.md"
+keywords = ["matching-engine", "hft", "orderbook", "low-latency", "lock-free"]
+categories = ["concurrency", "algorithms", "finance"]
+
+[lib]
+name = "apex_match"
+crate-type = ["lib", "cdylib", "staticlib"]
+
+[[bin]]
+name = "apex-match"
+path = "src/main.rs"
+
+[[bench]]
+name = "engine_bench"
+harness = false
+
+[dependencies]
+crossbeam-utils = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+hdrhistogram = "7.5"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+rand = "0.8"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+overflow-checks = false
+debug = false
+incremental = false
