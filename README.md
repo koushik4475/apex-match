@@ -1,4 +1,7 @@
-# ⚡ apex-match
+# Apex Match | Rust In-Memory Order Matching Engine and L2/L3 Order Book
+
+Apex Match is a Rust implementation of an in-memory trading order-matching engine and L2/L3 order-book model. The project focuses on order intake, price-time priority, FIFO matching, pre-trade checks, and benchmark/test harnesses for matching workloads. It is intended for systems engineering and exchange-simulation research; performance numbers depend on hardware, compiler settings, and benchmark methodology.
+
 
 <div align="center">
 
