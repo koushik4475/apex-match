@@ -69,6 +69,12 @@ pub unsafe extern "C" fn apex_engine_submit_order(
     let engine = &mut *(engine_ptr as *mut MatchingEngine);
     let o = &*order;
 
+    // C callers can pass arbitrary integer discriminants. Reject unknown values
+    // instead of silently translating malformed input into a valid order.
+    if o.side > 1 || o.order_type > 4 || o.tif > 3 || o.stp_mode > 3 {
+        return -1;
+    }
+
     let side = match o.side {
         0 => Side::Buy,
         _ => Side::Sell,
@@ -179,5 +185,64 @@ pub unsafe extern "C" fn apex_engine_get_l2_snapshot(
         0
     } else {
         -2
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn valid_order() -> ApexOrderC {
+        ApexOrderC {
+            order_id: 1,
+            trader_id: 7,
+            symbol_id: 1,
+            side: 0,
+            order_type: 0,
+            tif: 0,
+            stp_mode: 0,
+            price: 10_000,
+            qty: 1,
+            timestamp_ns: 1,
+        }
+    }
+
+    #[test]
+    fn rejects_unknown_c_enum_values_without_processing_order() {
+        let engine_ptr = apex_engine_create(16);
+        let mut order = valid_order();
+
+        for (field, invalid_value) in [
+            (0, 2), // side
+            (1, 5), // order_type
+            (2, 4), // time in force
+            (3, 4), // self-trade prevention
+        ] {
+            match field {
+                0 => order.side = invalid_value,
+                1 => order.order_type = invalid_value,
+                2 => order.tif = invalid_value,
+                3 => order.stp_mode = invalid_value,
+                _ => unreachable!(),
+            }
+
+            let result = unsafe { apex_engine_submit_order(engine_ptr, &order) };
+            assert_eq!(result, -1, "field {field} should be rejected");
+
+            match field {
+                0 => order.side = 0,
+                1 => order.order_type = 0,
+                2 => order.tif = 0,
+                3 => order.stp_mode = 0,
+                _ => unreachable!(),
+            }
+        }
+
+        unsafe {
+            let engine = &*(engine_ptr as *mut MatchingEngine);
+            assert_eq!(engine.metrics.orders_processed, 0);
+            apex_engine_destroy(engine_ptr);
+        }
     }
 }
