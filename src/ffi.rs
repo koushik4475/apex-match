@@ -188,7 +188,6 @@ pub unsafe extern "C" fn apex_engine_get_l2_snapshot(
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
